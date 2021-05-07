@@ -24,7 +24,7 @@ public class LoginController implements Controller{
 				Customer rvo = CustomerDaoImpl.getInstance().signIn(id, password);
 				HttpSession session =request.getSession();
 				if(rvo != null) {
-					session.setAttribute("rvo", rvo); // Customer 객체를 만들어놓자.
+					session.setAttribute("rvo", rvo);
 					path = "Main/Index.jsp";
 					
 				}else {
@@ -33,6 +33,6 @@ public class LoginController implements Controller{
 	        } catch (SQLException e) {
 	        	path = "Main/login.jsp";
 	        }
-			return new ModelAndView(path, true); // encoding ERROR post 방식으로 보내기.
+			return new ModelAndView(path, true);
 		}
 }
