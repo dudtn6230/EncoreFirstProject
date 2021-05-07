@@ -2,24 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!-- 
-<c:choose>
-
-	<c:when test="${!empty vo}">
-		<b>${vo.name}님 로그인 성공!!</b><br>
-		<a href="index.jsp">Home...</a>
-	</c:when>
-	
-	<c:otherwise>
-		<script>
-			alert("로그인 부터 진행하시기 바랍니다!");
-			location.href="login.jsp";
-		</script>
-	</c:otherwise>
-	
-</c:choose>
- -->
-
 <c:choose>
 	<c:when test="${!empty rvo}">
 		<script>			
@@ -34,11 +16,6 @@
 	</c:otherwise>
 </c:choose>
  
-
-<!--  vo 객체를 여기다가 쏴주면 
-	추후 진행 --> 
-
-   
 <!DOCTYPE html>
 <html>
 <head>
@@ -94,11 +71,18 @@ $(function(){
 			<a href="Index.jsp">8자피자</a>
 		</div>
 		
-		<ul class="navbar__menu">
+	<ul class="navbar__menu">
 			<li><a href="../pizzaMenu.do">메뉴</a></li>
-			<li><a href="../showCustomer.do?id=${rvo.custId}">마이페이지</a></li>
-			<li><a href="register.jsp">회원가입</a></li>
-			<li><a href="#">장바구니</a></li>
+			<c:choose>
+				<c:when test="${!empty rvo}">
+					<li><a href="../showCustomer.do?id=${rvo.custId}">마이페이지</a></li>
+				</c:when>
+				<c:otherwise>
+					<li><a href="../showCustomer.do?id=">마이페이지</a></li>
+				</c:otherwise>
+			</c:choose>
+			
+			<li><a href="../basket.do">장바구니</a></li>
 		</ul>
 		
 
@@ -112,21 +96,30 @@ $(function(){
 
 	
 	
-	 <div id="quick">
-	 <ul>
-	 	<li><h2>퀵메뉴</h2></li>
-	 	<li><a href="login.jsp"><i class="fas fa-sign-in-alt">로그인</i></a></li>
-	 	<li><a href="../logout.do"><i class="fas fa-sign-out-alt">로그아웃</i></a></li>
-	 	<li><a href="../showCustomer.do?id=${rvo.custId}"><i class="fas fa-info-circle">마이페이지</i></a></li>
-	 </ul>	
-	 </div>
 	
+	 <div id="quick">
+		 <ul>
+		 	<li><h2>퀵메뉴</h2></li>
+		 <c:choose>
+		 	<c:when test="${!empty rvo}">
+		 		<li><i class="fas fa-trophy">${rvo.custName} 님</i></li>
+			 	<li><a href="../showCustomer.do?id=${rvo.custId}"><i class="fas fa-info-circle">마이페이지</i></a></li>
+			 	<li><a href="../logout.do"><i class="fas fa-sign-out-alt">로그아웃</i></a></li>
+			 </c:when>
+			 <c:otherwise>	
+		 		<li><a href="login.jsp"><i class="fas fa-sign-in-alt">로그인</i></a></li>
+		 		<li><a href="register.jsp"><i class="fas fa-registered">회원가입</i></a></li>
+		 	</c:otherwise>
+		 </c:choose>
+		 
+		 </ul>	
+	 </div>
 	<div class="columns">
 			<div class="menu">
 				<ul><br>
 					<li><h4><span id="menu1">회원 공간</span></h4></li>
 					<li><a href="updateInfo.jsp"> 회원정보수정 </a></li>
-					<li><a href="#"> 장바구니 </a></li>
+					<li><a href="../basket.do"> 장바구니 </a></li>
 					<li><a href="../pizzaMenu.do"> 메뉴 </a></li>
 				</ul>
 				
@@ -144,34 +137,13 @@ $(function(){
 				
 				<ul>
 					<li><h4><span id="menu3"> 주문내역 및 장바구니 </span></h4></li>					
-					
 				</ul>
-			</div>
-		
+			</div>		
 	</div>
 	
 	<div class ="columns2">
-		<div class ="wrap2">
-		
-		</div>
-	
-	
+		<div class ="wrap2"></div>
 	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	<hr>
 	<footer id="footer">

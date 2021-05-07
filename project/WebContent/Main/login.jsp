@@ -3,28 +3,6 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!--  ret을 받아와서 true, false에 따른 결과값 도출. -->
-
-<!-- 
-<c:choose>
-
-	<c:when test="${ret == 'true'}">
-		<script>
-		<b>${vo.name}님 로그인 성공!!</b><br>
-			location.href="Index.jsp"
-		</script>
-	</c:when>
-	
-	<c:otherwise>
-		<script>
-			alert("회원가입 부터 진행하시기 바랍니다!");
-			location.href="register.jsp";
-		</script>
-	</c:otherwise>
-	
-</c:choose>
- -->
-
 
 <!DOCTYPE html>
 <html>
@@ -53,14 +31,6 @@ $(function(){
 });// ready
 
 
-// 비동기로 구현해야 할 것 같은 느낌.
-// login 실패시 -> login.jsp 아래에 존재하지 않는 아이디입니다 를 추가후 
-// 비동기로 구현..? 
-			
-
-
-
-
 </script>
 
 </head>
@@ -87,47 +57,43 @@ $(function(){
 		
 		<ul class="navbar__menu">
 			<li><a href="../pizzaMenu.do">메뉴</a></li>
-			<li><a href="../showCustomer.do?id=${vo.id}">마이페이지</a></li>
-			<li><a href="register.jsp">회원가입</a></li>
-			<li><a href="#">장바구니</a></li>
+			<c:choose>
+				<c:when test="${!empty rvo}">
+					<li><a href="../showCustomer.do?id=${rvo.custId}">마이페이지</a></li>
+				</c:when>
+				<c:otherwise>
+					<li><a href="../showCustomer.do">마이페이지</a></li>
+				</c:otherwise>
+			</c:choose>
+			
+			<li><a href="../basket.do">장바구니</a></li>
 		</ul>
-		
-	
-
-		
 		
 		<a href="#" class="navbar__toogleBtn">
 			<i class="fas fa-book-open"></i>
 		</a>
 	</nav>
 	
+
 	 <div id="quick">
-	 <ul>
-	 	<li><h2>퀵메뉴</h2></li>
-	 	<li><a href="login.jsp"><i class="fas fa-sign-in-alt">로그인</i></a></li>
-	 	<li><a href="../logout.do"><i class="fas fa-sign-out-alt">로그아웃</i></a></li>
-	 	<li><a href="../showCustomer.do?id=${vo.id}"><i class="fas fa-info-circle">마이페이지</i></a></li>
-	 </ul>	
-	 </div>
-	
-	<div>
-		
-		
-	</div>
-	
+		 <ul>
+		 	<li><h2>퀵메뉴</h2></li>
+		 <c:choose>
+		 	<c:when test="${!empty rvo}">
+		 		<li><i class="fas fa-trophy">${rvo.custName} 님</i></li>
+			 	<li><a href="../showCustomer.do}"><i class="fas fa-info-circle">마이페이지</i></a></li>
+			 	<li><a href="../logout.do"><i class="fas fa-sign-out-alt">로그아웃</i></a></li>
+			 </c:when>
+			 <c:otherwise>	
+		 		<li><a href="login.jsp"><i class="fas fa-sign-in-alt">로그인</i></a></li>
+		 		<li><a href="register.jsp"><i class="fas fa-registered">회원가입</i></a></li>
+		 	</c:otherwise>
+		 </c:choose>
+		 
+		 </ul>	
+	 </div>	
 	
 	<div class="columns">
-		<div class="menu">
-				<ul><br>
-					<li><h4><span id="menu1">회원 공간</span></h4></li>
-					<li><a href="login.jsp"> 로그인 </a></li>
-					<li><a href="register.jsp"> 회원가입 </a></li>
-					<li><a href="showCustomer.do?id=${vo.id}">마이페이지</a>
-					<li><a href="findId.jsp"> 아이디 찾기 </a></li>
-					<li><a href="findPw.jsp"> PW 찾기 </a></li>
-					<li><a href="updateInfo.jsp"> 회원정보수정 </a></li>
-				</ul>
-			</div>
 			
 	  	<form action="../login.do" class="wrap" name="loginFrm">
 	  	
